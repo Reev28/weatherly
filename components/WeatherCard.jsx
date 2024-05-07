@@ -14,22 +14,22 @@ export default function WeatherCard() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState('');
   const [loading, setLoading] = useState(false);
-  const API_key=process.env.NEXT_PUBLIC_API_KEY;
+  const API_key = process.env.NEXT_PUBLIC_API_KEY;
 
-  
 
-  const handleInputChange = (e:any) =>{
+
+  const handleInputChange = (e) => {
     setLocation(e.target.value);
   }
 
-  const handleKeyDown = (e:any) =>{
-    if (e.key==='Enter') {
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
       search();
     }
   }
 
   const weatherImages = {
-    Clear:sunny,
+    Clear: sunny,
     Clouds: cloudy,
     Rain: rainy,
     Snow: snowy,
@@ -37,7 +37,7 @@ export default function WeatherCard() {
     Mist: cloudy,
   }
 
-  const weatherImage = data.weather ? weatherImages[data.weather[0].main]:loadingGif;
+  const weatherImage = data.weather ? weatherImages[data.weather[0].main] : loadingGif;
 
   const backgroundImages = {
     Clear: 'linear-gradient(to right, #f3b07c, #fcd283)',
@@ -49,18 +49,18 @@ export default function WeatherCard() {
   }
 
   const backgroundImage = data.weather
-  ? backgroundImages[data.weather[0].main]
-  : 'linear-gradient(to right, #f3b07c, #fcd283)'
+    ? backgroundImages[data.weather[0].main]
+    : 'linear-gradient(to right, #f3b07c, #fcd283)'
 
 
-  const search = async () =>{
-    if(location.trim() !== ''){
+  const search = async () => {
+    if (location.trim() !== '') {
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${API_key}`
       const result = await fetch(url);
       const searchData = await result.json();
-      if(searchData.cod !==200){
-        setData({notFound:true});
-      }else{
+      if (searchData.cod !== 200) {
+        setData({ notFound: true });
+      } else {
         setData(searchData);
         setLocation('');
       }
@@ -68,9 +68,9 @@ export default function WeatherCard() {
 
     }
   }
-  
+
   useEffect(() => {
-    const fetchDefaultWeather = async () =>{
+    const fetchDefaultWeather = async () => {
       setLoading(true);
       const defaultLocation = 'Ireland';
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${defaultLocation}&units=metric&appid=${API_key}`
@@ -79,42 +79,42 @@ export default function WeatherCard() {
       setData(searchData);
       setLoading(false);
     }
-  
+
     fetchDefaultWeather();
   }, [])
-  
+
 
   const now = new Date();
-  const time = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
-  const date = (new Intl.DateTimeFormat('en-US',{dateStyle:'full'})).format(now);
+  const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+  const date = (new Intl.DateTimeFormat('en-US', { dateStyle: 'full' })).format(now);
 
 
   return (
     <div className="container" style={{}}>
       <div className="weather-app" style={{
-          backgroundImage:
-            backgroundImage && backgroundImage.replace
-              ? backgroundImage.replace('to right', 'to top')
-              : null,
-        }}>
+        backgroundImage:
+          backgroundImage && backgroundImage.replace
+            ? backgroundImage.replace('to right', 'to top')
+            : null,
+      }}>
         <div className="search">
           <div className="search-top">
             <i className="location-icon fa-solid fa-location-dot"></i>
             <div className="location">{data.name}</div>
           </div>
           <div className="search-bar">
-            <input type="text" placeholder="Enter location" value={location} onChange={handleInputChange} onKeyDown={handleKeyDown}/>
+            <input type="text" placeholder="Enter location" value={location} onChange={handleInputChange} onKeyDown={handleKeyDown} />
             <i className="fa-solid fa-magnifying-glass" onClick={search}></i>
           </div>
         </div>
-        {loading? (<Image src={loadingGif} className='loader' alt='loading' height={500} width={500}></Image>) : data.notFound?(<div className="not-found">Not Found 😥</div>):(
+        {loading ? (<Image src={loadingGif} className='loader' alt='loading' height={500} width={500}></Image>) : data.notFound ? (<div className="not-found">Not Found 😥</div>) : (
           <>
             <div className="weather">
-                <div className="image-container">
-                 <Image className='weather-image' src={weatherImage} alt='sunny'  />
-                </div>
-              <div className="weather-type">{data.weather?data.weather[0].main:null}</div>
-              <div className="temp">{data.main?`${data.main.temp}°`:null}</div>
+              <div className="image-container">
+                <Image className='weather-image' src={weatherImage} alt='sunny' />
+              </div>
+              <div className="weather-type">{data.weather ? data.weather[0].main : null}</div>
+              <div className="temp">{data.main ? `${data.main.temp}°` : null}</div>
             </div>
             <div className="weather-date">
               <p>{date}</p>
@@ -123,17 +123,17 @@ export default function WeatherCard() {
               <div className="humidity">
                 <div className="data-name">Humidity</div>
                 <i className="fa-solid fa-droplet"></i>
-                <div className="data">{data.main?data.main.humidity:null}%</div>
+                <div className="data">{data.main ? data.main.humidity : null}%</div>
               </div>
               <div className="wind">
                 <div className="data-name">wind</div>
                 <i className="fa-solid fa-wind"></i>
-                <div className="data">{data.wind?data.wind.speed:null} km/h</div>
+                <div className="data">{data.wind ? data.wind.speed : null} km/h</div>
               </div>
             </div>
           </>
         )}
-        
+
       </div>
     </div>
   );
