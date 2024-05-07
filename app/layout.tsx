@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Weather App",
   description: "A weather app",
   icons:{
-    icon:'/next.svg'
+    icon:'/weatherly-icon.svg'
   }
 };
 
