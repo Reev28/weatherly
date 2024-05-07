@@ -7,28 +7,72 @@ import snowy from '../public/images/snowy.png'
 import loadingGif from '../public/images/loading.gif'
 import { useEffect, useState } from 'react';
 
+type WeatherData = {
+  coord: {
+      lon: number;
+      lat: number;
+  };
+  weather: {
+      id: number;
+      main: string;
+      description: string;
+      icon: string;
+  }[];
+  base: string;
+  main: {
+      temp: number;
+      feels_like: number;
+      temp_min: number;
+      temp_max: number;
+      pressure: number;
+      humidity: number;
+      sea_level: number;
+      grnd_level: number;
+  };
+  visibility: number;
+  wind: {
+      speed: number;
+      deg: number;
+      gust: number;
+  };
+  clouds: {
+      all: number;
+  };
+  dt: number;
+  sys: {
+      type: number;
+      id: number;
+      country: string;
+      sunrise: number;
+      sunset: number;
+  };
+  timezone: number;
+  id: number;
+  name: string;
+  cod: number;
+};
 
-
+type WeatherType = 'Clear' | 'Clouds' | 'Rain' | 'Snow' | 'Haze' | 'Mist';
 
 export default function WeatherCard() {
-  const [data, setData] = useState({});
+  const [data, setData] = useState<WeatherData|any>({});
   const [location, setLocation] = useState('');
   const [loading, setLoading] = useState(false);
   const API_key = process.env.NEXT_PUBLIC_API_KEY;
 
 
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e:any) => {
     setLocation(e.target.value);
   }
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e:any) => {
     if (e.key === 'Enter') {
       search();
     }
   }
 
-  const weatherImages = {
+  const weatherImages:any = {
     Clear: sunny,
     Clouds: cloudy,
     Rain: rainy,
@@ -39,7 +83,7 @@ export default function WeatherCard() {
 
   const weatherImage = data.weather ? weatherImages[data.weather[0].main] : loadingGif;
 
-  const backgroundImages = {
+  const backgroundImages:any = {
     Clear: 'linear-gradient(to right, #f3b07c, #fcd283)',
     Clouds: 'linear-gradient(to right, #57d6d4, #71eeec)',
     Rain: 'linear-gradient(to right, #5bc8fb, #80eaff)',
