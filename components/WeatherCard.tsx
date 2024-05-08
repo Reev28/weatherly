@@ -6,6 +6,7 @@ import rainy from '../public/images/rainy.png'
 import snowy from '../public/images/snowy.png'
 import loadingGif from '../public/images/loading.gif'
 import { useEffect, useState } from 'react';
+import Clock from './Clock';
 
 type WeatherData = {
   coord: {
@@ -132,6 +133,8 @@ export default function WeatherCard() {
   const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
   const date = (new Intl.DateTimeFormat('en-US', { dateStyle: 'full' })).format(now);
 
+  // const latitude = 40.7128;
+  // const longitude = -74.006;
 
   return (
     <div className="container" style={{}}>
@@ -154,6 +157,9 @@ export default function WeatherCard() {
         {loading ? (<Image src={loadingGif} className='loader' alt='loading' height={500} width={500}></Image>) : data.notFound ? (<div className="not-found">Not Found 😥</div>) : (
           <>
             <div className="weather">
+            <div className="location-time">
+              <Clock timeZoneOffset={data.timezone?data.timezone:0} suppressHydrationWarning={true}/>
+            </div>
               <div className="image-container">
                 <Image className='weather-image' src={weatherImage} alt='sunny' />
               </div>
