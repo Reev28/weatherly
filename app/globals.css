@@ -157,10 +157,12 @@ main{
 
 .temp {
   position: absolute;
-  top: 55%;
+  /* top: 55%;
+  left: 50%; */
+  top:13%;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 9rem;
+  font-size: 4rem;
   background-image: linear-gradient(to right, #2f2e57, #605d80);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -169,11 +171,13 @@ main{
 
 .clock {
   position: absolute;
-  top:14%;
-  left: 75%;
+  top: 58%;
+  left: 62%;
+  /* top:14%;
+  left: 75%; */
   width: 100%;
   transform: translateX(-50%);
-  font-size: 4rem;
+  font-size: 6rem;
   background-image: linear-gradient(to right, #2f2e57, #605d80);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
