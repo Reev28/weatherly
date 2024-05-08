@@ -68,7 +68,7 @@ export default function WeatherCard() {
   }
 
   const handleKeyDown = (e:any) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter'||e.key === 'Tab') {
       search();
     }
   }
