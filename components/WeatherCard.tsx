@@ -151,7 +151,7 @@ export default function WeatherCard() {
             <div className="location">{data.name}</div>
           </div>
           <div className="search-bar">
-            <input type="text" placeholder="Enter location" value={location} onChange={handleInputChange} onKeyDown={handleKeyDown} onKeyPress={handleKeyDown}/>
+            <input type="text" tabIndex={-1} name="location-input" placeholder="Enter location" value={location} onChange={handleInputChange} onKeyDown={handleKeyDown} onKeyPress={handleKeyDown}/>
             <i className="fa-solid fa-magnifying-glass" onClick={search}></i>
           </div>
         </div>

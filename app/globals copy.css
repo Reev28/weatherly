@@ -9,7 +9,12 @@
   box-sizing: border-box;
   font-family: 'Lolita One', sans-serif;
 }
+body{
+  width: 120%;
+  height: 100%;
+  /* max-width: 100%; */
 
+}
 html{
   font-size: 62.5%;
 }
@@ -18,30 +23,48 @@ html{
   display: flex;
   flex-shrink: 0;
   flex-wrap: wrap;
-  justify-content: space-evenly;
-  padding: 3.4rem 0 3.1rem 2.2rem;
-  gap: auto;
+  width: 100%;
+  padding: 0 0 1rem 6rem;
+  height: 100%;
   background-image: linear-gradient(to right, #f3b07c, #fcd283);
+}
+main{
+  height: 100%;
 
 }
-
 .container {
+ min-width: 36rem;
  flex-shrink: 0;
-  max-width: 39rem;
-  min-height: 66rem;
+  width: 40rem;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   overflow: hidden;
-}
+  padding: 1rem 0 0 0;
+  
+  flex-wrap: wrap;
+  flex: 1;
+  /* margin: 0 1rem; */
 
+}
+/* 
+.image-container{
+  width: 100%;
+} */
 
 .weather-image{
+  /* display: none; */
   margin-top: -9rem;
-  margin-left: -41rem;
+  margin-left: -45rem;
+
   max-width: 400%;
+
 }
 
 .weather-app {
-  width: 33rem;
-  height: 63rem;
+  width: 35rem;
+  height: 65rem;
   background-image: linear-gradient(to top, #f3b07c, #fcd283);
   border-radius: 3rem;
   display: flex;
@@ -66,6 +89,7 @@ html{
   justify-content: center;
   text-transform: uppercase;
 }
+
 
 
 .search-top i {
@@ -141,7 +165,7 @@ html{
   position: absolute;
   /* top: 55%;
   left: 50%; */
-  top:14%;
+  top:13%;
   left: 50%;
   transform: translateX(-50%);
   font-size: 4rem;
@@ -168,7 +192,7 @@ html{
 
 .weather-date {
   position: absolute;
-  bottom: 25%;
+  bottom: 22%;
   font-size: 1.6rem;
   color: #484569;
 }
