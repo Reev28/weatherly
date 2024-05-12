@@ -55,7 +55,7 @@ type WeatherData = {
 
 type WeatherType = 'Clear' | 'Clouds' | 'Rain' | 'Snow' | 'Haze' | 'Mist';
 
-export default function WeatherCard() {
+export default function WeatherCard({savedLocation,id}:{savedLocation:string,id:number}) {
   const [data, setData] = useState<WeatherData|any>({});
   const [location, setLocation] = useState('');
   const [loading, setLoading] = useState(false);
@@ -68,7 +68,6 @@ export default function WeatherCard() {
   }
 
   const handleKeyDown = (e:any) => {
-    // alert(`key pressed: ${e.key}`);
     if (e.key === 'Enter'||e.key === 'Tab') {
       search();
     }
@@ -101,6 +100,7 @@ export default function WeatherCard() {
 
   const search = async () => {
     if (location.trim() !== '') {
+      ////Updadte UI
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${API_key}`
       const result = await fetch(url);
       const searchData = await result.json();
@@ -112,13 +112,36 @@ export default function WeatherCard() {
       }
       setLoading(false);
 
+      ////Update LocalStorage
+      const localLocationsNew = localStorage.getItem('WEATHERLY_LOCATIONS');
+      const locationData = localLocationsNew?JSON.parse(localLocationsNew):[{"index":1,"name":""}];
+      console.log(locationData);
+      //Find index of specific object using findIndex method.    
+      const objIndex = locationData.findIndex((obj:any) => obj.index == id);
+
+      //Log object to Console.
+      console.log("Before update: ", locationData[objIndex])
+
+      //Update object's name property.
+      locationData[objIndex].name = location; 
+
+      //Log object to console again.
+      console.log("After update: ", locationData[objIndex])
+      console.log(locationData);
+      //Save new array in localStorage
+      localStorage.setItem('WEATHERLY_LOCATIONS',JSON.stringify(locationData));
+      
     }
   }
 
   useEffect(() => {
     const fetchDefaultWeather = async () => {
+      let defaultLocation = 'mexico';
+console.log("id:"+id);
+
+      if(savedLocation!="null") defaultLocation=savedLocation;
       setLoading(true);
-      const defaultLocation = 'Ireland';
+      // const defaultLocation = 'Ireland';
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${defaultLocation}&units=metric&appid=${API_key}`
       const result = await fetch(url);
       const searchData = await result.json();

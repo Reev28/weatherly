@@ -1,41 +1,34 @@
 'use client'
 import WeatherCard from "@/components/WeatherCard";
-import { type } from "os";
-import { useEffect, useState } from "react";
-
 
 export default function Home() {
 
-  const [savedLocations, setSavedLocations] = useState<any>({})
+  const localLocationsNew = localStorage.getItem('WEATHERLY_LOCATIONS');
+  const locationData = localLocationsNew?JSON.parse(localLocationsNew):[];
 
-  useEffect(() => {
+  //Temporary Condition
+  if(locationData.length<1){
+    locationData.push({"index":"1","name":"goa"},{"index":"2","name":"Ireland"},{"index":"3","name":"america"},{"index":"4","name":"japan"});
+    localStorage.setItem('WEATHERLY_LOCATIONS',JSON.stringify(locationData));
+  }
 
-    // window.localStorage.setItem('WEATHERLY_LOCATIONS',JSON.stringify({1:'Goa',2:'Ireland'}));
-    const localLocations:any = window.localStorage.getItem('WEATHERLY_LOCATIONS');
-    const obj = JSON.parse(localLocations);
-    console.log("obj",obj);
-    console.log(typeof obj);
-    
-    
-    setSavedLocations(obj);
-    console.log("hi",localLocations);
-    console.log("savedLocations",savedLocations);
-
-
-   
-  }, [])
-  
-
-  return (
+  return (    
   <main>
     <div className="weathercard">
-
-    <WeatherCard key='1'/>
-    <WeatherCard key='2'/>
-    
-    <WeatherCard key='3'/>
-    <WeatherCard key='4'/>
-    
+      {
+        locationData.length<1?
+        (
+        <WeatherCard savedLocation={'qatar'} id={1}/>
+        )
+        :
+        (
+          locationData.map((location:any)=>{
+            return(
+          <WeatherCard savedLocation={location.name} id={location.index}/>
+            )
+          })
+        )
+      }
     </div>
   </main>
   );
