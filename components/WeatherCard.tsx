@@ -113,7 +113,12 @@ export default function WeatherCard({savedLocation,id}:{savedLocation:string,id:
       setLoading(false);
 
       ////Update LocalStorage
-      const localLocationsNew = localStorage.getItem('WEATHERLY_LOCATIONS');
+      let localLocationsNew;
+      
+      if (typeof window !== 'undefined') {
+        localLocationsNew = localStorage.getItem('WEATHERLY_LOCATIONS');
+      }
+
       const locationData = localLocationsNew?JSON.parse(localLocationsNew):[{"index":1,"name":""}];
       console.log(locationData);
       //Find index of specific object using findIndex method.    
@@ -129,7 +134,10 @@ export default function WeatherCard({savedLocation,id}:{savedLocation:string,id:
       console.log("After update: ", locationData[objIndex])
       console.log(locationData);
       //Save new array in localStorage
-      localStorage.setItem('WEATHERLY_LOCATIONS',JSON.stringify(locationData));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('WEATHERLY_LOCATIONS',JSON.stringify(locationData));
+
+      }
       
     }
   }
@@ -178,12 +186,12 @@ console.log("id:"+id);
             <i className="fa-solid fa-magnifying-glass" onClick={search}></i>
           </div>
         </div>
-        {loading ? (<Image src={loadingGif} className='loader' alt='loading' height={500} width={500}></Image>) : data.notFound ? (<div className="not-found">Not Found 😥</div>) : (
+        {loading ? (<Image src={loadingGif} className='loader' alt='loading' height={500} width={500} priority={true}></Image>) : data.notFound ? (<div className="not-found">Not Found 😥</div>) : (
           <>
             <div className="weather">
             <div className="temp">{data.main ? `${data.main.temp}°` : null}</div>
               <div className="image-container">
-                <Image className='weather-image' src={weatherImage} alt='sunny' />
+                <Image className='weather-image' src={weatherImage} alt='sunny' priority={true}/>
               </div>
               <div className="weather-type">{data.weather ? data.weather[0].main : null}</div>
               <div className="location-time">
