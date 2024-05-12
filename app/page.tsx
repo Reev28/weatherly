@@ -18,13 +18,13 @@ export default function Home() {
       {
         locationData.length<1?
         (
-        <WeatherCard savedLocation={'qatar'} id={1}/>
+        <WeatherCard savedLocation={'qatar'} id={1} key={1}/>
         )
         :
         (
           locationData.map((location:any)=>{
             return(
-          <WeatherCard savedLocation={location.name} id={location.index}/>
+          <WeatherCard savedLocation={location.name} id={location.index} key={location.index}/>
             )
           })
         )
