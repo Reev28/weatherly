@@ -32,6 +32,32 @@ html{
   overflow: hidden;
 }
 
+#add-card{
+  background-image: linear-gradient(to right, #c3bebe90, #0000002f);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-container{
+  width: 7rem;
+  height: 7rem;
+  font-size: 6rem;
+  color: gray;
+  background-image: linear-gradient(to right, #bbbabaa3,#d8d8d880);
+  border-radius: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+#add-card{
+  /* flex-direction: column; */
+  justify-content: space-around;
+  gap: 6rem;
+  padding-bottom: 26rem;
+}
 
 .weather-image{
   margin-top: -9rem;
@@ -207,4 +233,19 @@ html{
 .data {
   font-size: 2rem;
   color: #2f2e57;
+}
+
+.delete-button{
+  width: 2rem;
+  height: 2rem;
+  border-radius: 2rem;
+  position:absolute;  
+  right: 1rem;
+  top:1.5rem;
+  cursor: pointer;
+}
+
+.delete-button i {
+  font-size: 1.6rem;
+  text-shadow: -0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.1);
 }

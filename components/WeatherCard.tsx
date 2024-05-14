@@ -55,7 +55,7 @@ type WeatherData = {
 
 type WeatherType = 'Clear' | 'Clouds' | 'Rain' | 'Snow' | 'Haze' | 'Mist';
 
-export default function WeatherCard({savedLocation,id}:{savedLocation:string,id:number}) {
+export default function WeatherCard({savedLocation,id,locationCount,updateLocations}:{savedLocation:string,id:number,locationCount:number,updateLocations:()=>void}) {
   const [data, setData] = useState<WeatherData|any>({});
   const [location, setLocation] = useState('');
   const [loading, setLoading] = useState(false);
@@ -138,22 +138,26 @@ export default function WeatherCard({savedLocation,id}:{savedLocation:string,id:
         localStorage.setItem('WEATHERLY_LOCATIONS',JSON.stringify(locationData));
 
       }
-      
+
     }
   }
 
   useEffect(() => {
     const fetchDefaultWeather = async () => {
       let defaultLocation = 'mexico';
-console.log("id:"+id);
+      console.log("id:"+id);
 
       if(savedLocation!="null") defaultLocation=savedLocation;
       setLoading(true);
-      // const defaultLocation = 'Ireland';
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${defaultLocation}&units=metric&appid=${API_key}`
       const result = await fetch(url);
       const searchData = await result.json();
-      setData(searchData);
+      if (searchData.cod !== 200) {
+        setData({ notFound: true });
+      } else {
+        setData(searchData);
+        setLocation('');
+      }
       setLoading(false);
     }
 
@@ -165,8 +169,26 @@ console.log("id:"+id);
   const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
   const date = (new Intl.DateTimeFormat('en-US', { dateStyle: 'full' })).format(now);
 
-  // const latitude = 40.7128;
-  // const longitude = -74.006;
+  const deleteLocation =(e:any)=>{
+    console.log(e);
+    
+  let localLocationsNew ;
+  if (typeof window !== 'undefined') {
+    localLocationsNew = localStorage.getItem('WEATHERLY_LOCATIONS');
+  }
+  let locationData = localLocationsNew?JSON.parse(localLocationsNew):[];
+  console.log("Before:",locationData);
+
+  //Find and Delete index of specific object using findIndex method.    
+  const objIndex = locationData.findIndex((obj:any) => obj.index == id);
+  locationData.splice(objIndex,1)
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('WEATHERLY_LOCATIONS',JSON.stringify(locationData));
+    console.log("After:",locationData);
+  }
+  
+  updateLocations();
+  }
 
   return (
     <div className="container" style={{}}>
@@ -176,6 +198,12 @@ console.log("id:"+id);
             ? backgroundImage.replace('to right', 'to top')
             : null,
       }}>
+        {locationCount<=1?<></>:(
+          <div className="delete-button" onClick={deleteLocation}>
+          <i className="fa-regular fa-trash-can"></i>
+        </div>
+        )}
+        
         <div className="search">
           <div className="search-top">
             <i className="location-icon fa-solid fa-location-dot"></i>
