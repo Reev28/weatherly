@@ -249,3 +249,7 @@ html{
   font-size: 1.6rem;
   text-shadow: -0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.1);
 }
+
+footer{
+  background-image: linear-gradient(to left, #f3b07ca4, #fcd283ad);
+}

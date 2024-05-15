@@ -33,6 +33,9 @@ export default function Home() {
   }
   }
 
+  const d = new Date();
+  let year = d.getFullYear();
+
   return (    
   <main>
     <div className="weathercard">
@@ -52,6 +55,15 @@ export default function Home() {
       }
       {allLocations.length>5?<></>:<AddCard updateLocations={updateLocations}/>}
     </div>
+    <footer>
+        <div className='flex justify-center pt-6 pb-2'>
+          <div className="copy-right">
+            &copy; {year}{" "}. All rights reserved. 
+          </div>
+          <p className="text-gray">Created By</p> &nbsp;
+          <a href="https://reevdsouza.vercel.app/" className='text-gray underline'>Reev Dsouza</a>
+        </div>
+      </footer>
   </main>
   );
 }
