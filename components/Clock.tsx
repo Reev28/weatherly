@@ -6,8 +6,13 @@ function Clock({ timeZoneOffset,suppressHydrationWarning }:{timeZoneOffset:numbe
 
   useEffect(() => {
     const fetchTime = () => {
-      const currentTimeInMilliseconds = Date.now() + (timeZoneOffset-3600) * 1000;
-      setCurrentTime(new Date(currentTimeInMilliseconds));
+      const d = new Date();
+      const localTime = d.getTime();
+      const localOffset = d.getTimezoneOffset() * 60000;
+      const utc = localTime + localOffset;
+      const locationLocalTime = utc + (1000 * timeZoneOffset);
+
+      setCurrentTime(new Date(locationLocalTime));
     };
 
     // Fetch time when the component mounts
